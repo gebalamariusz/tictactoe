@@ -6,18 +6,24 @@ def main():
     player_2 = 2
     player_move = True
     round = 1
+    move_check = True
 
     table = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     while check_score(table) and round <= 9:
         os.system('clear')
         print_table(table)
+        if move_check == False:
+            print('Incorrect move!')
         if player_move:
-            move(player_1, table)
+            move_check = move(player_1, table)
         else:
-            move(player_2, table)
-        player_move = not player_move
-        round += 1
+            move_check = move(player_2, table)
+        if move_check:
+            player_move = not player_move
+            round += 1
+        else:
+            continue
 
     if not check_score(table):
         os.system('clear')
@@ -29,7 +35,10 @@ def main():
 
     if round > 9:
         os.system('clear')
+        print_table(table)
+        print(' ')
         print("It's tie!")
+        print(' ')
 
     return
 
@@ -57,7 +66,7 @@ def move(player_num, tab):
     else:
         sign = 'o'
     print(' ')
-    place = int(input("Your sign is {}, where to put it? ".format(sign)))
+    place = int(input("Player {} turn, your sign is {}, where to put it? ".format(player_num, sign)))
     if place == 1 and tab[0][0] == 1:
         tab[0][0] = sign
     elif place == 2 and tab[0][1] == 2:
@@ -76,6 +85,11 @@ def move(player_num, tab):
         tab[2][1] = sign
     elif place == 9 and tab[2][2] == 9:
         tab[2][2] = sign
+    else:
+        print('incorrect move!')
+        return False
+
+    return True
 
 if __name__ == '__main__':
     main()
