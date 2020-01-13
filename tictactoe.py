@@ -90,7 +90,6 @@ def move(player_num, tab):
     elif place == 9 and tab[2][2] == 9:
         tab[2][2] = sign
     else:
-        print('incorrect move!')
         return False
 
     return True
